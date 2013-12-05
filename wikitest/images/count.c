@@ -1,4 +1,12 @@
+/********************
+  * 2013/12/5 sogo
+  * sogosonnet@naver.com
+  * file triver
+  * input: current directory
+  * output: all files in current directory
+  *******************/
 #include <stdio.h>
+#include <string.h>
 #include <dirent.h>
 
 void main (void)

@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <dirent.h>
+
+void main (void)
+{
+    /*
+    int file_count = 0;
+    DIR * dirp;
+    struct dirent * entry;
+    
+    dirp = opendir("./");
+    while(( entry = readdir(dirp)) != NULL) {
+        if(entry->d_type == DT_REG) {
+            printf("%s\n",entry->d_name);
+            file_count++;
+        }
+    }
+    closedir(dirp);
+    printf("File count: %d\n",file_count);
+    */
+
+    DIR *dir_info;
+    struct dirent *dir_entry;
+
+    dir_info = opendir("./");
+    if(dir_info) {
+        while( dir_entry = readdir(dir_info)) {
+            printf("%s\n",dir_entry->d_name);
+        }
+        closedir(dir_info);
+    }
+
+}

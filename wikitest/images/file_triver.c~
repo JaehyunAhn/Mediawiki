@@ -8,16 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
-/****************************
-  * input:  1. directory 
-            2. repo(sitory) array
-            3. repo count
-            
-  * output: 1. files in repository
-            2. save other directory
-  *
-  **************************/
-void folder_thriver(char *entry, char *repo, int *repo_count);
+
+int folder_thriver(char *repo, int *repo_count);
 
 int main (int arc, char **argv)
 {
@@ -34,12 +26,28 @@ int main (int arc, char **argv)
     char dir_route[1000][2000];
     int dir_count = 0;
     strcpy(dir_route[dir_count],argv[1]);
-    folder_thriver(argv[1], *dir_route, &dir_count);
-    
+    while(1)
+    {
+        if(folder_thriver(*dir_route, &dir_count) == 0)
+            break;
+        if(dir_count == 0)
+            break;
+    }
     return 1;
 }
 
-void folder_thriver(char *entry, char *repo, int *repo_count)
+/****************************
+  * input:  1. repo(sitory) array
+  *         2. repo count
+  *          
+  * output: 1. files in repository
+  *         2. save other directory
+  * return: == 1 : everything goes correct
+            == 0 : return NULL
+  *
+  ***************************/
+int folder_thriver(char *repo, int *repo_count)
 {
     printf("%s\n",&repo[0]);
+    return 1;
 }

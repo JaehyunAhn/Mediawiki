@@ -33,14 +33,14 @@ $wgScriptPath = "/mediawiki/wikitest";
 $wgScriptExtension = ".php";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://128.210.171.174";
+$wgServer = "http://128.210.171.232";
 
 ## The relative URL path to the skins directory
 $wgStylePath = "$wgScriptPath/skins";
 
 ## The relative URL path to the logo.  Make sure you change this from the default,
 ## or else you'll overwrite your logo when you upgrade!
-$wgLogo             = "$wgStylePath/common/images/wiki.png";
+$wgLogo             = "$wgStylePath/common/images/Main_Logo_128.png";
 
 ## UPO means: this is also a user preference option
 
@@ -76,9 +76,15 @@ $wgMemCachedServers = array();
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
-$wgEnableUploads = false;
+$wgAllowExternalImages = true;
+$wgAllowCopyUploads     = true;
+$wgAllowImageMoving             = true;
 #$wgUseImageMagick = true;
 #$wgImageMagickConvertCommand = "/usr/bin/convert";
+$wgFileExtensions = array('png','gif','jpg','jpeg','doc','xls','mpp','pdf','ppt','tiff','bmp','docx', 'xlsx', 'pptx','ps','odt','ods','odp','odg');
+$wgEnableUploads = true;
+
+$wgExternalLinkTarget = '_blank';
 
 # InstantCommons allows wiki to use images from http://commons.wikimedia.org
 $wgUseInstantCommons = false;

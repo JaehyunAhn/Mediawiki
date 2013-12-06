@@ -77,7 +77,7 @@ int folder_thriver(char *repo, int *repo_count) {
                         strcpy(&repo[count+1],init_dir);
                         strcat(&repo[count+1],entry->d_name);
                         printf("%d :",count);
-                        printf("%s\n%s%s\n",&repo[count+1],&repo[init]);
+                        printf("%s\n%s\n",&repo[count+1],&repo[init]);
                         count++;
                     }
                     else {
@@ -97,10 +97,10 @@ int folder_thriver(char *repo, int *repo_count) {
     printf("\t\tSUMMARY\n");
     printf("Files:\t\t\t%d\n",file_count);
     printf("Detected directories:\t%d\n",count);
-    printf("%s\n",&repo[0]);
-    printf("%s\n",&repo[1]);
-    printf("%s\n",&repo[2]);
-    printf("%s\n",&repo[3]);
+    printf("%s\n",&repo[10]);
+    printf("%s\n",&repo[11]);
+    printf("%s\n",&repo[12]);
+    printf("%s\n",&repo[13]);
     *repo_count+=1;
     return 1;
 }

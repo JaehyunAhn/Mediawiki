@@ -7,34 +7,40 @@
   ****************************/
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <dirent.h>
 
-int folder_thriver(char *repo, int *repo_count);
+int folder_thriver(char **repo, int *repo_count);
 void description();
 
 int main (int arc, char **argv) {
-    // input exception handler
+    /* input exception handler */
     char current[2];
     if(arc == 1) 
         return 0;
     
     current[0] = argv[1][0];
-    current[1] = argv[1][1];
-    
-    if(strcmp(current,"./") != 0)
+    current[1] = '\0';
+
+    if(strcmp(current,".") != 0)
         return 0;
 
-    // Description
+    /* Description */
     description();
     
-    // folder thrive
-    char dir_route[1000][2000];
+    /* folder thrive */
+    char **dir_route;
+    int i;
     int dir_count = 0;
     
+    dir_route = (char **)malloc(sizeof(char*)*1000);
+    for(i=0; i<1000; i++)
+        dir_route[i] = (char *)malloc(sizeof(char*)*2000);
+
     strcpy(dir_route[dir_count],argv[1]);
-    
+
     while(1) {
-        if(folder_thriver(*dir_route, &dir_count) == 0)
+        if(folder_thriver(dir_route, &dir_count) == 0)
             break;
         if(dir_count == 0)
             break;
@@ -52,8 +58,8 @@ int main (int arc, char **argv) {
             == 0 : return NULL
   *
   ***************************/
-int folder_thriver(char *repo, int *repo_count) {
-    printf("%s\n",&repo[*repo_count]);
+int folder_thriver(char **repo, int *repo_count) {
+    printf("%s\n",repo[*repo_count]);
 
     int file_count = 0;
     int init = *repo_count;
@@ -61,9 +67,11 @@ int folder_thriver(char *repo, int *repo_count) {
     DIR *dirp;
     struct dirent *entry;
     char init_dir[50];
-    strcpy(init_dir,&repo[init]);
 
-    dirp = opendir(&repo[*repo_count]);
+    strcpy(init_dir,repo[init]);
+
+    dirp = opendir(init_dir);
+
     if(dirp) {
         while (( entry = readdir(dirp)) != NULL ) {
             if( entry->d_type == DT_REG ) {
@@ -72,12 +80,11 @@ int folder_thriver(char *repo, int *repo_count) {
             }
             if( entry->d_type == DT_DIR ) {
                 if(entry->d_name[0] != '.') {
-                    printf("[dir] %s\n",entry->d_name);
                     if(count < 1000) {
-                        strcpy(&repo[count+1],init_dir);
-                        strcat(&repo[count+1],entry->d_name);
-                        printf("%d :",count);
-                        printf("%s\n%s\n",&repo[count+1],&repo[init]);
+                        strcpy(repo[count+1],init_dir);
+                        strcat(repo[count+1],"/");
+                        strcat(repo[count+1],entry->d_name);
+                        //printf("%d :%s,%s\n",count,repo[count+1],repo[count]);
                         count++;
                     }
                     else {
@@ -97,10 +104,10 @@ int folder_thriver(char *repo, int *repo_count) {
     printf("\t\tSUMMARY\n");
     printf("Files:\t\t\t%d\n",file_count);
     printf("Detected directories:\t%d\n",count);
-    printf("%s\n",&repo[10]);
-    printf("%s\n",&repo[11]);
-    printf("%s\n",&repo[12]);
-    printf("%s\n",&repo[13]);
+    printf("%s\n",repo[0]);
+    printf("%s\n",repo[1]);
+    printf("%s\n",repo[2]);
+    printf("%s\n",repo[3]);
     *repo_count+=1;
     return 1;
 }

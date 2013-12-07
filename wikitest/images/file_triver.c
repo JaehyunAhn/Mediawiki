@@ -65,7 +65,6 @@ int main (int arc, char **argv) {
 int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
     printf("Current route:%s\n",repo[*repo_count]);
 
-    int file_count = 0;
     int init = *repo_count;
     int count = *repo_thrive;
     DIR *dirp;
@@ -79,8 +78,12 @@ int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
     if(dirp) {
         while (( entry = readdir(dirp)) != NULL ) {
             if( entry->d_type == DT_REG ) {
-                printf("\t\t%s\n",entry->d_name);
-                file_count++;
+                if ( strstr(entry->d_name,".jpg") )
+                    printf("\t\t%s\n",entry->d_name);
+                if ( strstr(entry->d_name,".jpeg") )
+                    printf("\t\t%s\n",entry->d_name);
+                if ( strstr(entry->d_name,".png") )
+                    printf("\t\t%s\n",entry->d_name);
             }
             if( entry->d_type == DT_DIR ) {
                 if(entry->d_name[0] != '.') {
@@ -104,12 +107,6 @@ int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
         printf("ERROR: [file_triver.c] There is no directory: %s\n",init_dir);
         return 0;
     }
-    /*
-    printf("\n************************************\n");
-    printf("\t\tSUMMARY\n");
-    printf("Files:\t\t\t%d\n",file_count);
-    printf("Detected directories:\t%d\n",count);
-    */
     *repo_thrive = count;
     *repo_count+=1;
     return 1;

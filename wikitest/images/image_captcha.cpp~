@@ -1,14 +1,28 @@
-/*****************************
-  * sogo
-  * 2013/12/5 ~
-  * file triver ver 2
+ /*
+  * Author: Sogo
+  * sogosonnet@gmail.com
+  * Contents: Image Captcha
+  * Date: 2013/12/7 ~
   * input: keyboard (directory)
   * output: all files in directory
-  ****************************/
+  *
+  *
+  * <Open Source provider>
+  * Author: Liu Liu
+  * Contents: SURF Image Comparison Algorithm
+  * liuliu.1987+opencv@gmail.com
+  */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <dirent.h>
+
+#include <cv.h>
+#include <highgui.h>
+#include <ctype.h>
+#include <iostream>
+#include <vector>
 
 int folder_thriver(char **repo, int *repo_count, int *repo_thrive);
 void description();

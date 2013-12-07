@@ -49,6 +49,11 @@ int main (int arc, char **argv) {
         if(dir_count == 0)
             break;
     }
+
+    for(i=0; i<1000; i++)
+        free(dir_route[i]);
+    free(dir_route);
+
     return 1;
 }
 

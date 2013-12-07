@@ -63,7 +63,7 @@ int main (int arc, char **argv) {
   *
   ***************************/
 int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
-    printf("Current folder route:%s\n\n",repo[*repo_count]);
+    //printf("Current folder route:%s\n\n",repo[*repo_count]);
 
     int file_count = 0;
     int init = *repo_count;
@@ -116,5 +116,5 @@ int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
 }
 
 void description () {
-    printf("Image coparison Starts From:\n");
+    printf("That folder has:\n");
 }

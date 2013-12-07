@@ -41,6 +41,9 @@ int main (int arc, char **argv) {
     strcpy(dir_route[dir_count],argv[1]);
 
     while(1) {
+        if(repo_count != 0)
+            if(dir_count == repo_count)
+                break;
         if(folder_thriver(dir_route, &dir_count, &repo_count) == 0)
             break;
         if(dir_count == 0)
@@ -60,7 +63,7 @@ int main (int arc, char **argv) {
   *
   ***************************/
 int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
-    printf("Current folder route:%s\n\n",repo[*repo_count]);
+    //printf("Current folder route:%s\n\n",repo[*repo_count]);
 
     int file_count = 0;
     int init = *repo_count;

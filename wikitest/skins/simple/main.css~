@@ -424,3 +424,7 @@ table.collapsed tr.collapsable {
 .templatesUsed {
 	margin-top: 1.5em;
 }
+
+
+<link rel="shortcut icon" href="../../favicon.ico">;
+

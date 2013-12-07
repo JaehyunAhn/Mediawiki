@@ -21,11 +21,59 @@
 #include <cv.h>
 #include <highgui.h>
 #include <ctype.h>
+
 #include <iostream>
 #include <vector>
 
-int folder_thriver(char **repo, int *repo_count, int *repo_thrive);
-void description();
+using namespace std;
+
+// define whether to use approximate nearest-neighbor search
+#define USE_FLANN
+
+IplImage *image = 0;
+
+double
+compareSURFDescriptors( const float *d1, const float *d2, double best, int length)
+{
+    double total_cost = 0;
+    assert( length % 4 == 0 );
+    for( int i = 0; i < length; i+= 4 )
+    {
+        double t0 = d1[i] - d2[i];
+        double t1 = d1[i+1] - d2[i+1];
+        double t2 = d1[i+2] - d2[i+2];
+        double t3 = d1[i+3] - d2[i+3];
+        total_cost += t0*t0 + t1*t1 + t2*t2 + t3*t3;
+        if( total_cost > best )
+            break;
+    }
+    return total_cost;
+}
+/*
+int
+naiveNearestNeighbor( const float* vec, int laplacian,
+                      const CvSeq* model_keypoints,
+                      const CvSeq* model_descriptors )
+{
+    int length = (int)(model_descriptors->elem_size/sizeof(float));
+    int i, neighbor = -1;
+    double d, dist1 = 1e6, dist2 = 1e6;
+    CvSeqReader reader, kreader;
+    cvStartReadSeq( model_keypoints, &kreader, 0 );
+    cvStartReadSeq( model_descriptors, &reader, 0 );
+
+    for( i = 0; i < model_descriptors->total; i++ )
+    {
+        const CvSURFPoint* kp = (const CvSURFPoint*)kreader.ptr;
+        const float* mvec = (const float*)reader.ptr;
+        CV_NEXT_SEQ_ELEM( kreader.seq->elem_size, kreader );
+        CV_NEXT_SEQ_ELEM( reader.seq->
+*/
+int 
+folder_thriver(char **repo, int *repo_count, int *repo_thrive);
+
+void 
+description();
 
 int main (int arc, char **argv) {
     /* input exception handler */

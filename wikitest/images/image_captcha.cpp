@@ -1,7 +1,7 @@
 /*****************************
   * sogo
-  * 2013/12/5 ~
-  * file triver ver 2
+  * 2013/12/7 ~
+  * Image captcha
   * input: keyboard (directory)
   * output: all files in directory
   ****************************/

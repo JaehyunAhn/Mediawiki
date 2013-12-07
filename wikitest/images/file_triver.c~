@@ -63,7 +63,7 @@ int main (int arc, char **argv) {
   *
   ***************************/
 int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
-    //printf("Current folder route:%s\n\n",repo[*repo_count]);
+    printf("Current route:%s\n",repo[*repo_count]);
 
     int file_count = 0;
     int init = *repo_count;
@@ -79,7 +79,7 @@ int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
     if(dirp) {
         while (( entry = readdir(dirp)) != NULL ) {
             if( entry->d_type == DT_REG ) {
-                printf("%s\n",entry->d_name);
+                printf("\t%s\n",entry->d_name);
                 file_count++;
             }
             if( entry->d_type == DT_DIR ) {
@@ -88,7 +88,7 @@ int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
                         strcpy(repo[count+1],init_dir);
                         strcat(repo[count+1],"/");
                         strcat(repo[count+1],entry->d_name);
-                        //printf("%d :%s\n",count,repo[count+1]);
+                        //printf("%s\n",repo[count+1]);
                         count++;
                     }
                     else {
@@ -116,5 +116,5 @@ int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
 }
 
 void description () {
-    printf("Image coparison Starts From:\n");
+    printf("That folder has:\n");
 }

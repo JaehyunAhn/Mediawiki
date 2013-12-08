@@ -210,7 +210,7 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
 
 
 int 
-folder_thriver(char **repo, int *repo_count, int *repo_thrive);
+image_thriver(char **repo, int *repo_count, int *repo_thrive);
 
 void 
 description();
@@ -246,7 +246,7 @@ int main (int arc, char **argv) {
         if(repo_count != 0)
             if(dir_count == repo_count)
                 break;
-        if(folder_thriver(dir_route, &dir_count, &repo_count) == 0)
+        if(image_thriver(dir_route, &dir_count, &repo_count) == 0)
             break;
         if(dir_count == 0)
             break;
@@ -263,50 +263,60 @@ int main (int arc, char **argv) {
   * input:  1. repo(sitory) array
   *         2. repo count
   *          
-  * output: 1. files in repository
-  *         2. save other directory
+  * output: 1. 100 ~ 799 px image name
+  *         2. that directory
   * return: == 1 : everything goes correct
             == 0 : return NULL
   *
   ***************************/
-int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
+int image_thriver(char **repo, int *repo_count, int *repo_thrive) {
     // printf("Current route:%s\n",repo[*repo_count]);
 
     int file_counter = 0;
+    bool img_flag = false;
+    char *str1 = NULL;
+    char *str2 = NULL;
     int init = *repo_count;
     int count = *repo_thrive;
     DIR *dirp;
     struct dirent *entry;
-    char init_dir[10000];
+    char buff[10000];
 
-    strcpy(init_dir,repo[init]);
+    strcpy(buff,repo[init]);
 
-    dirp = opendir(init_dir);
+    dirp = opendir(buff);
 
     if(dirp) {
         while (( entry = readdir(dirp)) != NULL ) {
             if( entry->d_type == DT_REG ) {
-                if( file_counter < 1 )
+                if ( strstr(entry->d_name,".jpg") )
+                    img_flag = true;
+                    //printf("\t\t%s\n",entry->d_name);
+                if ( strstr(entry->d_name,".jpeg") )
+                    img_flag = true;
+                    //printf("\t\t%s\n",entry->d_name);
+                if ( strstr(entry->d_name,".png") )
+                    img_flag = true;
+                    //printf("\t\t%s\n",entry->d_name);
+                if ( img_flag )
                 {
-                    if ( strstr(entry->d_name,".jpg") )
-                        strcpy(init_dir,entry->d_name);
-                        //printf("\t\t%s\n",entry->d_name);
-                    if ( strstr(entry->d_name,".jpeg") )
-                        strcpy(init_dir,entry->d_name);
-                        //printf("\t\t%s\n",entry->d_name);
-                    if ( strstr(entry->d_name,".png") )
-                        strcpy(init_dir,entry->d_name);
-                        //printf("\t\t%s\n",entry->d_name);
+                    str1 = entry->d_name;
+                    str2 = strstr(entry->d_name,"px");
+                    if((str2 != NULL) && (strlen(str1) - strlen(str2) == 3))
+                    {
+                        if(entry->d_name[0] <= '7') 
+                            // Filter image 100 ~ 799 px
+                            strcpy(buff,entry->d_name);
+                    }
                 }
                 file_counter++;
             }
             if( entry->d_type == DT_DIR ) {
                 if(entry->d_name[0] != '.') {
                     if(count < 1000) {
-                        strcpy(repo[count+1],init_dir);
+                        strcpy(repo[count+1],buff);
                         strcat(repo[count+1],"/");
                         strcat(repo[count+1],entry->d_name);
-                        //printf("%s\n",repo[count+1]);
                         count++;
                     }
                     else {
@@ -316,15 +326,18 @@ int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
                 }
             }
         }
-        if( file_counter >= 1 )
+        if( img_flag )
         {
-            printf("Current route:%s\n",repo[*repo_count]);
-            printf("\t\thas %s\n",init_dir);
+            if( strcmp(repo[*repo_count],buff) != 0)
+            {
+                printf("Current route:%s\n",repo[*repo_count]);
+                printf("\t\thas %s\n",buff);
+            }
         }
         closedir(dirp);
     }
     else {
-        printf("ERROR: [file_triver.c] There is no directory: %s\n",init_dir);
+        printf("ERROR: [file_triver.c] There is no directory: %s\n",buff);
         return 0;
     }
     *repo_thrive = count;

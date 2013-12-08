@@ -149,7 +149,7 @@ require_once( "$IP/extensions/Renameuser/Renameuser.php" );
 require_once( "$IP/extensions/SpamBlacklist/SpamBlacklist.php" );
 require_once( "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php" );
 require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
-
+require_once( "$IP/extensions/Widgets/Widgets.php" );
 
 # End of automatically generated settings.
 # Add more configuration options below.

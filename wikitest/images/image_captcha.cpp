@@ -210,7 +210,7 @@ locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors
 
 
 int 
-image_thriver(char **repo, int *repo_count, int *repo_thrive);
+image_thriver(char **repo, int *repo_count, int *repo_thrive, FILE *fp);
 
 void 
 description();
@@ -242,19 +242,30 @@ int main (int arc, char **argv) {
 
     strcpy(dir_route[dir_count],argv[1]);
 
+    /* file open */
+    FILE *fp = fopen("metadata_image.txt","w");
+    if( fp == NULL )
+    {
+        printf("File writing error\n");
+        return 0;
+    }
+
     while(1) {
         if(repo_count != 0)
             if(dir_count == repo_count)
                 break;
-        if(image_thriver(dir_route, &dir_count, &repo_count) == 0)
+        if(image_thriver(dir_route, &dir_count, &repo_count, fp) == 0)
             break;
         if(dir_count == 0)
             break;
     }
 
+    /* free buffer list */
     for(i=0; i<1000; i++)
         free(dir_route[i]);
     free(dir_route);
+    /* close file */
+    fclose(fp);
 
     return 1;
 }
@@ -269,7 +280,7 @@ int main (int arc, char **argv) {
             == 0 : return NULL
   *
   ***************************/
-int image_thriver(char **repo, int *repo_count, int *repo_thrive) {
+int image_thriver(char **repo, int *repo_count, int *repo_thrive, FILE *fp) {
     // printf("Current route:%s\n",repo[*repo_count]);
 
     int file_counter = 0;
@@ -281,6 +292,7 @@ int image_thriver(char **repo, int *repo_count, int *repo_thrive) {
     DIR *dirp;
     struct dirent *entry;
     char buff[10000];
+
 
     strcpy(buff,repo[init]);
 
@@ -332,6 +344,16 @@ int image_thriver(char **repo, int *repo_count, int *repo_thrive) {
             {
                 printf("Current route:%s\n",repo[*repo_count]);
                 printf("\t\thas %s\n",buff);
+
+                if(fp != NULL)
+                {
+                    char file_name[10000];
+                    strcpy(file_name,repo[*repo_count]);
+                    strcat(file_name,"/");
+                    strcat(file_name,buff);
+                    strcat(file_name,"\n");
+                    fprintf(fp,file_name);
+                }
             }
         }
         closedir(dirp);

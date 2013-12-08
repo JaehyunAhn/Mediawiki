@@ -33,7 +33,8 @@ using namespace std;
 IplImage *image = 0;
 
 double
-compareSURFDescriptors( const float *d1, const float *d2, double best, int length)
+compareSURFDescriptors( const float *d1, const float *d2, 
+                        double best, int length)
 {
     double total_cost = 0;
     assert( length % 4 == 0 );
@@ -87,7 +88,8 @@ naiveNearestNeighbor( const float* vec, int laplacian,
 
 void
 findPairs( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors,
-           const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, vector<int>& ptpairs )
+           const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, 
+           vector<int>& ptpairs )
 {
     int i;
     CvSeqReader reader, kreader;
@@ -101,7 +103,8 @@ findPairs( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors,
         const float* descriptor = (const float*)reader.ptr;
         CV_NEXT_SEQ_ELEM( kreader.seq->elem_size, kreader );
         CV_NEXT_SEQ_ELEM( reader.seq->elem_size, reader );
-        int nearest_neighbor = naiveNearestNeighbor (descriptor, kp->laplacian, imageKeypoints, imageDescriptors );
+        int nearest_neighbor = naiveNearestNeighbor (descriptor, kp->laplacian, 
+                                                     imageKeypoints, imageDescriptors );
         if( nearest_neighbor >= 0 )
         {
             ptpairs.push_back(i);
@@ -267,8 +270,9 @@ int main (int arc, char **argv) {
   *
   ***************************/
 int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
-    printf("Current route:%s\n",repo[*repo_count]);
+    // printf("Current route:%s\n",repo[*repo_count]);
 
+    int file_counter = 0;
     int init = *repo_count;
     int count = *repo_thrive;
     DIR *dirp;
@@ -282,12 +286,16 @@ int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
     if(dirp) {
         while (( entry = readdir(dirp)) != NULL ) {
             if( entry->d_type == DT_REG ) {
-                if ( strstr(entry->d_name,".jpg") )
-                    printf("\t\t%s\n",entry->d_name);
-                if ( strstr(entry->d_name,".jpeg") )
-                    printf("\t\t%s\n",entry->d_name);
-                if ( strstr(entry->d_name,".png") )
-                    printf("\t\t%s\n",entry->d_name);
+                if( file_counter < 1 )
+                {
+                    if ( strstr(entry->d_name,".jpg") )
+                        printf("\t\t%s\n",entry->d_name);
+                    if ( strstr(entry->d_name,".jpeg") )
+                        printf("\t\t%s\n",entry->d_name);
+                    if ( strstr(entry->d_name,".png") )
+                        printf("\t\t%s\n",entry->d_name);
+                }
+                file_counter++;
             }
             if( entry->d_type == DT_DIR ) {
                 if(entry->d_name[0] != '.') {
@@ -305,6 +313,8 @@ int folder_thriver(char **repo, int *repo_count, int *repo_thrive) {
                 }
             }
         }
+        if( file_counter >= 1 )
+            printf("That route:%s\n",repo[*repo_count]);
         closedir(dirp);
     }
     else {

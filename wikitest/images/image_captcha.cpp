@@ -146,8 +146,10 @@ flannFindPairs( const CvSeq*, const CvSeq* objectDescriptors,
     // find nearest neighbors using FLANN
     cv::Mat m_indices(objectDescriptors->total, 2, CV_32S);
     cv::Mat m_dists(objectDescriptors->total, 2, CV_32F);
-    cv::flann::Index flann_index(m_image, cv::flann::KDTreeIndexParams(4)); // using 4 randomized kdtrees
-    flann_index.knnSearch(m_object, m_indices, m_dists, 2, cv::flann::SearchParams(64) ); // maximum number of leafs checked
+    cv::flann::Index flann_index(m_image, cv::flann::KDTreeIndexParams(4)); 
+    // using 4 randomized kdtrees
+    flann_index.knnSearch(m_object, m_indices, m_dists, 2, cv::flann::SearchParams(64) ); 
+    // maximum number of leafs checked
 
     int* indices_ptr = m_indices.ptr<int>(0);
     float* dists_ptr = m_dists.ptr<float>(0);
@@ -267,6 +269,10 @@ int main (int arc, char **argv) {
     /* close file */
     fclose(fp);
 
+    /* image comparison logic */
+
+
+
     return 1;
 }
 
@@ -353,6 +359,11 @@ int image_thriver(char **repo, int *repo_count, int *repo_thrive, FILE *fp) {
                     strcat(file_name,buff);
                     strcat(file_name,"\n");
                     fprintf(fp,file_name);
+                }
+                else
+                {
+                    printf("ERROR: [file_triver.c] cannot open file.\n");
+                    return 0;
                 }
             }
         }

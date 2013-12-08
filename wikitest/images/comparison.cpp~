@@ -255,7 +255,7 @@ int main(int argc, char** argv)
     cvSetImageROI( correspond, cvRect( 0, object->height, correspond->width, correspond->height ) );
     cvCopy( image, correspond );
     cvResetImageROI( correspond );
-/*
+
 #ifdef USE_FLANN
     printf("Using approximate nearest neighbor search\n");
 #endif
@@ -303,6 +303,6 @@ int main(int argc, char** argv)
     cvDestroyWindow("Object");
     cvDestroyWindow("Object SURF");
     cvDestroyWindow("Object Correspond");
-*/
+
     return 0;
 }

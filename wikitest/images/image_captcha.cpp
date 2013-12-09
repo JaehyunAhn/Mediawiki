@@ -1,17 +1,17 @@
- /*
-  * Author: Sogo
-  * sogosonnet@gmail.com
-  * Contents: Image Captcha
-  * Date: 2013/12/7 ~
-  * input: keyboard (directory)
-  * output: all files in directory
-  *
-  *
-  * <Open Source provider>
-  * Author: Liu Liu
-  * Contents: SURF Image Comparison Algorithm
-  * liuliu.1987+opencv@gmail.com
-  */
+/*
+ * Author: Sogo
+ * sogosonnet@gmail.com
+ * Contents: Image Captcha
+ * Date: 2013/12/7 ~
+ * input: keyboard (directory)
+ * output: all files in directory
+ *
+ *
+ * <Open Source provider>
+ * Author: Liu Liu
+ * Contents: SURF Image Comparison Algorithm
+ * liuliu.1987+opencv@gmail.com
+ */
 
 #include <stdio.h>
 #include <string.h>
@@ -32,7 +32,7 @@ using namespace std;
 
 IplImage *image = 0;
 
-double
+    double
 compareSURFDescriptors( const float* d1, const float* d2, double best, int length )
 {
     double total_cost = 0;
@@ -50,10 +50,10 @@ compareSURFDescriptors( const float* d1, const float* d2, double best, int lengt
     return total_cost;
 }// 42
 
-int
+    int
 naiveNearestNeighbor( const float* vec, int laplacian,
-                      const CvSeq* model_keypoints,
-                      const CvSeq* model_descriptors )
+        const CvSeq* model_keypoints,
+        const CvSeq* model_descriptors )
 {
     int length = (int)(model_descriptors->elem_size/sizeof(float));
     int i, neighbor = -1;
@@ -66,7 +66,7 @@ naiveNearestNeighbor( const float* vec, int laplacian,
     {
         const CvSURFPoint* kp = (const CvSURFPoint*)kreader.ptr;
         const float* mvec = (const float*)reader.ptr;
-    	CV_NEXT_SEQ_ELEM( kreader.seq->elem_size, kreader );
+        CV_NEXT_SEQ_ELEM( kreader.seq->elem_size, kreader );
         CV_NEXT_SEQ_ELEM( reader.seq->elem_size, reader );
         if( laplacian != kp->laplacian )
             continue;
@@ -86,9 +86,9 @@ naiveNearestNeighbor( const float* vec, int laplacian,
 }// 78
 
 
-void
+    void
 findPairs( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors,
-           const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, vector<int>& ptpairs )
+        const CvSeq* imageKeypoints, const CvSeq* imageDescriptors, vector<int>& ptpairs )
 {
     int i;
     CvSeqReader reader, kreader;
@@ -112,19 +112,19 @@ findPairs( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors,
 }
 
 
-void
+    void
 flannFindPairs( const CvSeq*, const CvSeq* objectDescriptors,
-           const CvSeq*, const CvSeq* imageDescriptors, vector<int>& ptpairs )
+        const CvSeq*, const CvSeq* imageDescriptors, vector<int>& ptpairs )
 {
-	int length = (int)(objectDescriptors->elem_size/sizeof(float));
+    int length = (int)(objectDescriptors->elem_size/sizeof(float));
 
     cv::Mat m_object(objectDescriptors->total, length, CV_32F);
-	cv::Mat m_image(imageDescriptors->total, length, CV_32F);
+    cv::Mat m_image(imageDescriptors->total, length, CV_32F);
 
 
-	// copy descriptors
+    // copy descriptors
     CvSeqReader obj_reader;
-	float* obj_ptr = m_object.ptr<float>(0);
+    float* obj_ptr = m_object.ptr<float>(0);
     cvStartReadSeq( objectDescriptors, &obj_reader );
     for(int i = 0; i < objectDescriptors->total; i++ )
     {
@@ -134,7 +134,7 @@ flannFindPairs( const CvSeq*, const CvSeq* objectDescriptors,
         obj_ptr += length;
     }
     CvSeqReader img_reader;
-	float* img_ptr = m_image.ptr<float>(0);
+    float* img_ptr = m_image.ptr<float>(0);
     cvStartReadSeq( imageDescriptors, &img_reader );
     for(int i = 0; i < imageDescriptors->total; i++ )
     {
@@ -153,19 +153,19 @@ flannFindPairs( const CvSeq*, const CvSeq* objectDescriptors,
     int* indices_ptr = m_indices.ptr<int>(0);
     float* dists_ptr = m_dists.ptr<float>(0);
     for (int i=0;i<m_indices.rows;++i) {
-    	if (dists_ptr[2*i]<0.6*dists_ptr[2*i+1]) {
-    		ptpairs.push_back(i);
-    		ptpairs.push_back(indices_ptr[2*i]);
-    	}
+        if (dists_ptr[2*i]<0.6*dists_ptr[2*i+1]) {
+            ptpairs.push_back(i);
+            ptpairs.push_back(indices_ptr[2*i]);
+        }
     }
 }
 
 
 /* a rough implementation for object location */
-int
+    int
 locatePlanarObject( const CvSeq* objectKeypoints, const CvSeq* objectDescriptors,
-                    const CvSeq* imageKeypoints, const CvSeq* imageDescriptors,
-                    const CvPoint src_corners[4], CvPoint dst_corners[4] )
+        const CvSeq* imageKeypoints, const CvSeq* imageDescriptors,
+        const CvPoint src_corners[4], CvPoint dst_corners[4] )
 {
     double h[9];
     CvMat _h = cvMat(3, 3, CV_64F, h);
@@ -221,7 +221,7 @@ int main (int arc, char **argv) {
     char current[2];
     if(arc == 1) 
         return 0;
-    
+
     current[0] = argv[1][0];
     current[1] = '\0';
 
@@ -230,13 +230,13 @@ int main (int arc, char **argv) {
 
     /* Description */
     description();
-    
+
     /* folder thrive */
     char **dir_route;
     int i,j;
     int dir_count = 0;
     int repo_count = 0;
-    
+
     dir_route = (char **)malloc(sizeof(char*)*1000);
     for(i=0; i<1000; i++)
         dir_route[i] = (char *)malloc(sizeof(char*)*2000);
@@ -266,7 +266,8 @@ int main (int arc, char **argv) {
 
     /* image comparison logic */
     FILE *f_in = fopen("metadata_image.txt","r");
-    FILE *f_out = fopen("report.txt","w");
+    FILE *f_out = fopen("report.html","w");
+    fprintf(f_out,"<html>\n<head>\n<title>Image Captcha Report</title>\n</head>\n<body>\n<table>");
     if(fp == NULL)
     {
         printf("File open error\n");
@@ -276,19 +277,22 @@ int main (int arc, char **argv) {
     i = 0;
     while( fscanf(f_in,"%s",dir_route[i]) != EOF )
         i++;
-    
+
     int total_number_of_dir = i;
     char object_filename[1000];
     char scene_filename[1000];
     for(i=0; i < total_number_of_dir; i++)
     {
         strcpy(object_filename,dir_route[i]);
-        fprintf(f_out,"%s\n",object_filename);
+        fprintf(f_out,"<tr>\n");
+        fprintf(f_out,"<td>%s</td>",strstr(object_filename,"px-"));
 
         for(j = i+1; j< total_number_of_dir; j++)
         {
+            if( j != i+1 )
+                fprintf(f_out,"<tr>\n<td></td>\n");
             strcpy(scene_filename,dir_route[j]);
-            fprintf(f_out,"\t%s",scene_filename);
+            fprintf(f_out,"<td>%s</td>",strstr(scene_filename,"px-"));
             //printf("%s :: %s\n",object_filename,scene_filename);
 
             CvMemStorage* storage = cvCreateMemStorage(0);
@@ -325,33 +329,38 @@ int main (int arc, char **argv) {
             double tt = (double)cvGetTickCount();
             cvExtractSURF( object, 0, &objectKeypoints, &objectDescriptors, storage, params );
             printf("Object Descriptors: %d\n", objectDescriptors->total);
-            fprintf(f_out,"\t%d",objectDescriptors->total);
+            fprintf(f_out,"<td>%d</td>",objectDescriptors->total);
             cvExtractSURF( image, 0, &imageKeypoints, &imageDescriptors, storage, params );
             printf("Image Descriptors: %d\n", imageDescriptors->total);
-            fprintf(f_out,"\t%d",imageDescriptors->total);
+            fprintf(f_out,"<td>%d</td>",imageDescriptors->total);
             tt = (double)cvGetTickCount() - tt;
             printf("Extraction time = %gms\n", tt/(cvGetTickFrequency()*1000.));
             // added TODO
             CvPoint src_corners[4] = {{0,0}, {object->width,0}, {object->width, object->height}, {0, object->height}};
             CvPoint dst_corners[4];
-            #ifdef USE_FLANN
-                printf("Using approximate nearest neighbor search\n");
-            #endif
-            
+#ifdef USE_FLANN
+            printf("Using approximate nearest neighbor search\n");
+#endif
+
             vector<int> ptpairs;
-            
-            #ifdef USE_FLANN
-                flannFindPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-            #else
-                findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
-            #endif
-            
+
+#ifdef USE_FLANN
+            flannFindPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
+#else
+            findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
+#endif
+
             printf("Match points: %d\n",(int)ptpairs.size());
+            fprintf(f_out,"<td>%d</td>\n",(int)ptpairs.size());
             float ratio = (float)ptpairs.size()/((float)objectDescriptors->total);
             printf("Ratio: %.2f\n",ratio*100);
-            fprintf(f_out,"\t%.2f\n",ratio*100);
+            fprintf(f_out,"<td>%.2f</td>\n",ratio*100);
+            if( j != i+1 )
+                fprintf(f_out,"</tr>\n");
         }
+        fprintf(f_out,"</tr>\n");
     }
+    fprintf(f_out,"</table>\n</body>\n</html>");
 
     /* free buffer list */
     for(i=0; i<1000; i++)
@@ -365,15 +374,15 @@ int main (int arc, char **argv) {
 }
 
 /****************************
-  * input:  1. repo(sitory) array
-  *         2. repo count
-  *          
-  * output: 1. 100 ~ 799 px image name
-  *         2. that directory
-  * return: == 1 : everything goes correct
-            == 0 : return NULL
-  *
-  ***************************/
+ * input:  1. repo(sitory) array
+ *         2. repo count
+ *          
+ * output: 1. 100 ~ 799 px image name
+ *         2. that directory
+ * return: == 1 : everything goes correct
+ == 0 : return NULL
+ *
+ ***************************/
 int image_thriver(char **repo, int *repo_count, int *repo_thrive, FILE *fp) {
     // printf("Current route:%s\n",repo[*repo_count]);
 
@@ -397,13 +406,13 @@ int image_thriver(char **repo, int *repo_count, int *repo_thrive, FILE *fp) {
             if( entry->d_type == DT_REG ) {
                 if ( strstr(entry->d_name,".jpg") )
                     img_flag = true;
-                    //printf("\t\t%s\n",entry->d_name);
+                //printf("\t\t%s\n",entry->d_name);
                 if ( strstr(entry->d_name,".jpeg") )
                     img_flag = true;
-                    //printf("\t\t%s\n",entry->d_name);
+                //printf("\t\t%s\n",entry->d_name);
                 if ( strstr(entry->d_name,".png") )
                     img_flag = true;
-                    //printf("\t\t%s\n",entry->d_name);
+                //printf("\t\t%s\n",entry->d_name);
                 if ( img_flag )
                 {
                     str1 = entry->d_name;
@@ -412,6 +421,11 @@ int image_thriver(char **repo, int *repo_count, int *repo_thrive, FILE *fp) {
                     {
                         if(entry->d_name[0] <= '7') 
                             // Filter image 100 ~ 799 px
+                            strcpy(buff,entry->d_name);
+                    }
+                    if((str2 != NULL) && (strlen(str1) - strlen(str2) == 2))
+                    {
+                        if(entry->d_name[0] >= '7')
                             strcpy(buff,entry->d_name);
                     }
                 }

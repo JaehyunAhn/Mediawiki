@@ -207,8 +207,8 @@ int main(int argc, char** argv)
 
     CvMemStorage* storage = cvCreateMemStorage(0);
 
-    cvNamedWindow("Object", 1);
-    cvNamedWindow("Object Correspond", 1);
+    //cvNamedWindow("Object", 1);
+    //cvNamedWindow("Object Correspond", 1);
 
     static CvScalar colors[] = 
     {
@@ -249,17 +249,17 @@ int main(int argc, char** argv)
     printf( "Extraction time = %gms\n", tt/(cvGetTickFrequency()*1000.));
     CvPoint src_corners[4] = {{0,0}, {object->width,0}, {object->width, object->height}, {0, object->height}};
     CvPoint dst_corners[4];
-    IplImage* correspond = cvCreateImage( cvSize(image->width, object->height+image->height), 8, 1 );
-    cvSetImageROI( correspond, cvRect( 0, 0, object->width, object->height ) );
-    cvCopy( object, correspond );
-    cvSetImageROI( correspond, cvRect( 0, object->height, correspond->width, correspond->height ) );
-    cvCopy( image, correspond );
-    cvResetImageROI( correspond );
+    //IplImage* correspond = cvCreateImage( cvSize(image->width, object->height+image->height), 8, 1 );
+    //cvSetImageROI( correspond, cvRect( 0, 0, object->width, object->height ) );
+    //cvCopy( object, correspond );
+    //cvSetImageROI( correspond, cvRect( 0, object->height, correspond->width, correspond->height ) );
+    //cvCopy( image, correspond );
+    //cvResetImageROI( correspond );
 
 #ifdef USE_FLANN
     printf("Using approximate nearest neighbor search\n");
 #endif
-
+/*
     if( locatePlanarObject( objectKeypoints, objectDescriptors, imageKeypoints,
         imageDescriptors, src_corners, dst_corners ))
     {
@@ -270,13 +270,15 @@ int main(int argc, char** argv)
             cvLine( correspond, cvPoint(r1.x, r1.y+object->height ),
                 cvPoint(r2.x, r2.y+object->height ), colors[8] );
         }
-    }
+    }*/
     vector<int> ptpairs;
 #ifdef USE_FLANN
     flannFindPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
 #else
     findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
 #endif
+    printf("%d\n",(int)ptpairs.size());
+/*
     for( i = 0; i < (int)ptpairs.size(); i += 2 )
     {
         CvSURFPoint* r1 = (CvSURFPoint*)cvGetSeqElem( objectKeypoints, ptpairs[i] );
@@ -303,6 +305,6 @@ int main(int argc, char** argv)
     cvDestroyWindow("Object");
     cvDestroyWindow("Object SURF");
     cvDestroyWindow("Object Correspond");
-
+*/
     return 0;
 }

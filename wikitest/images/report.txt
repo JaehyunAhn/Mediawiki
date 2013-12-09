@@ -1,0 +1,45 @@
+./thumb/a/a4/Purdue.jpeg/400px-Purdue.jpeg
+	./thumb/a/a6/Nipa.jpg/200px-Nipa.jpg	259	121	8.494209
+	./thumb/6/6a/Monet-madame-monet-and-her-son.jpg/350px-Monet-madame-monet-and-her-son.jpg	259	636	4.633205
+	./thumb/1/12/Sogang.jpg/200px-Sogang.jpg	259	42	10.810811
+	./thumb/1/10/Science_conception_diff.jpg/120px-Science_conception_diff.jpg	259	107	11.583012
+	./thumb/8/81/Fake_monalisa.jpg/658px-Fake_monalisa.jpg	259	739	12.355212
+	./thumb/8/8a/Sku.jpg/200px-Sku.jpg	259	78	4.633205
+	./thumb/5/54/Louvre.jpg/270px-Louvre.jpg	259	114	2.316602
+	./thumb/7/70/Mona_lisa_headcrop.jpg/481px-Mona_lisa_headcrop.jpg	259	281	2.316602
+./thumb/a/a6/Nipa.jpg/200px-Nipa.jpg
+	./thumb/6/6a/Monet-madame-monet-and-her-son.jpg/350px-Monet-madame-monet-and-her-son.jpg	121	636	3.305785
+	./thumb/1/12/Sogang.jpg/200px-Sogang.jpg	121	42	16.528925
+	./thumb/1/10/Science_conception_diff.jpg/120px-Science_conception_diff.jpg	121	107	14.876033
+	./thumb/8/81/Fake_monalisa.jpg/658px-Fake_monalisa.jpg	121	739	1.652892
+	./thumb/8/8a/Sku.jpg/200px-Sku.jpg	121	78	9.917355
+	./thumb/5/54/Louvre.jpg/270px-Louvre.jpg	121	114	3.305785
+	./thumb/7/70/Mona_lisa_headcrop.jpg/481px-Mona_lisa_headcrop.jpg	121	281	0.000000
+./thumb/6/6a/Monet-madame-monet-and-her-son.jpg/350px-Monet-madame-monet-and-her-son.jpg
+	./thumb/1/12/Sogang.jpg/200px-Sogang.jpg	636	42	6.289309
+	./thumb/1/10/Science_conception_diff.jpg/120px-Science_conception_diff.jpg	636	107	2.515723
+	./thumb/8/81/Fake_monalisa.jpg/658px-Fake_monalisa.jpg	636	739	2.830189
+	./thumb/8/8a/Sku.jpg/200px-Sku.jpg	636	78	1.572327
+	./thumb/5/54/Louvre.jpg/270px-Louvre.jpg	636	114	0.628931
+	./thumb/7/70/Mona_lisa_headcrop.jpg/481px-Mona_lisa_headcrop.jpg	636	281	2.201258
+./thumb/1/12/Sogang.jpg/200px-Sogang.jpg
+	./thumb/1/10/Science_conception_diff.jpg/120px-Science_conception_diff.jpg	42	107	0.000000
+	./thumb/8/81/Fake_monalisa.jpg/658px-Fake_monalisa.jpg	42	739	0.000000
+	./thumb/8/8a/Sku.jpg/200px-Sku.jpg	42	78	0.000000
+	./thumb/5/54/Louvre.jpg/270px-Louvre.jpg	42	114	4.761905
+	./thumb/7/70/Mona_lisa_headcrop.jpg/481px-Mona_lisa_headcrop.jpg	42	281	0.000000
+./thumb/1/10/Science_conception_diff.jpg/120px-Science_conception_diff.jpg
+	./thumb/8/81/Fake_monalisa.jpg/658px-Fake_monalisa.jpg	107	739	0.000000
+	./thumb/8/8a/Sku.jpg/200px-Sku.jpg	107	78	0.000000
+	./thumb/5/54/Louvre.jpg/270px-Louvre.jpg	107	114	0.000000
+	./thumb/7/70/Mona_lisa_headcrop.jpg/481px-Mona_lisa_headcrop.jpg	107	281	1.869159
+./thumb/8/81/Fake_monalisa.jpg/658px-Fake_monalisa.jpg
+	./thumb/8/8a/Sku.jpg/200px-Sku.jpg	739	78	2.706360
+	./thumb/5/54/Louvre.jpg/270px-Louvre.jpg	739	114	7.577808
+	./thumb/7/70/Mona_lisa_headcrop.jpg/481px-Mona_lisa_headcrop.jpg	739	281	12.178620
+./thumb/8/8a/Sku.jpg/200px-Sku.jpg
+	./thumb/5/54/Louvre.jpg/270px-Louvre.jpg	78	114	2.564103
+	./thumb/7/70/Mona_lisa_headcrop.jpg/481px-Mona_lisa_headcrop.jpg	78	281	0.000000
+./thumb/5/54/Louvre.jpg/270px-Louvre.jpg
+	./thumb/7/70/Mona_lisa_headcrop.jpg/481px-Mona_lisa_headcrop.jpg	114	281	10.526316
+./thumb/7/70/Mona_lisa_headcrop.jpg/481px-Mona_lisa_headcrop.jpg

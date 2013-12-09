@@ -913,3 +913,9 @@ body.vector-animateLayout #mw-head-base {
 	-o-transition: margin-left 250ms;
 	transition: margin-left 250ms;
 }
+
+.slideshow {
+    top: 0%;
+    height: 150px;
+    float: left
+}

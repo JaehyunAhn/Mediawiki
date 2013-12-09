@@ -1,0 +1,20 @@
+table, th, tr, td
+{
+    border: 1px solid black;
+}
+
+td
+{
+    padding:4px;
+}
+
+body
+{
+    font-family: Arial;
+    color:yellow;
+    background-attachment: fixed;
+    background-color: #ffffff;
+    background-image: url(velasquez.jpg);
+    background-size:1024px;
+    background-position: left center;
+}

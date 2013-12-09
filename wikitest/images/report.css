@@ -11,4 +11,10 @@ td
 body
 {
     font-family: Arial;
+    color:yellow;
+    background-attachment: fixed;
+    background-color: #ffffff;
+    background-image: url(velasquez.jpg);
+    background-size:1024px;
+    background-position: left center;
 }

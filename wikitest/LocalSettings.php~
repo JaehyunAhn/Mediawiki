@@ -154,3 +154,5 @@ require_once( "$IP/extensions/Widgets/Widgets.php" );
 # End of automatically generated settings.
 # Add more configuration options below.
 
+#Widget
+$wgGroupPermissions['sysop']['editwidgets'] = true;

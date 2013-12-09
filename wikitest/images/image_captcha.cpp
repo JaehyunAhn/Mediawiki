@@ -267,7 +267,8 @@ int main (int arc, char **argv) {
     /* image comparison logic */
     FILE *f_in = fopen("metadata_image.txt","r");
     FILE *f_out = fopen("report.html","w");
-    fprintf(f_out,"<html>\n<head>\n<title>Image Captcha Report</title>\n</head>\n<body>\n<table>");
+    fprintf(f_out,"<html>\n<head><link rel=\"stylesheet\" type=\"text/css\" href=\"report.css\">\n<title>Image Captcha Report</title>\n</head>\n<body>\n<table>\n");
+    fprintf(f_out,"<tr>\n<td>Original</td>\n<td>Target</td>\n<td>O_p</td>\n<td>T_p</td>\n<td>Match</td>\n<td>Ratio</td>\n</tr>\n");
     if(fp == NULL)
     {
         printf("File open error\n");
@@ -285,14 +286,14 @@ int main (int arc, char **argv) {
     {
         strcpy(object_filename,dir_route[i]);
         fprintf(f_out,"<tr>\n");
-        fprintf(f_out,"<td>%s</td>",strstr(object_filename,"px-"));
+        fprintf(f_out,"<td><a href=%s target=_blank>%s</a></td>",object_filename,strstr(object_filename,"px-"));
 
         for(j = i+1; j< total_number_of_dir; j++)
         {
             if( j != i+1 )
                 fprintf(f_out,"<tr>\n<td></td>\n");
             strcpy(scene_filename,dir_route[j]);
-            fprintf(f_out,"<td>%s</td>",strstr(scene_filename,"px-"));
+            fprintf(f_out,"<td><a href=%s target=_blank>%s</a></td>",scene_filename,strstr(scene_filename,"px-"));
             //printf("%s :: %s\n",object_filename,scene_filename);
 
             CvMemStorage* storage = cvCreateMemStorage(0);
@@ -354,7 +355,12 @@ int main (int arc, char **argv) {
             fprintf(f_out,"<td>%d</td>\n",(int)ptpairs.size());
             float ratio = (float)ptpairs.size()/((float)objectDescriptors->total);
             printf("Ratio: %.2f\n",ratio*100);
-            fprintf(f_out,"<td>%.2f</td>\n",ratio*100);
+            if( ratio >= 0.4 )
+                fprintf(f_out,"<td style=\"background-color:lightgreen;\">%.2f</td>\n",ratio*100);
+            else if( ratio >= 0.2 )
+                fprintf(f_out,"<td style=\"background-color:lightblue;\">%.2f</td>\n",ratio*100);
+            else
+                fprintf(f_out,"<td>%.2f</td>\n",ratio*100);
             if( j != i+1 )
                 fprintf(f_out,"</tr>\n");
         }

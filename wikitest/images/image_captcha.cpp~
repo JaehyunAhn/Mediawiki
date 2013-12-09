@@ -2,7 +2,7 @@
  * Author: Sogo
  * sogosonnet@gmail.com
  * Contents: Image Captcha
- * Date: 2013/12/7 ~
+ * Date: 2013/12/7 ~ 2013/12/8
  * input: keyboard (directory)
  * output: all files in directory
  *
@@ -251,7 +251,8 @@ int main (int arc, char **argv) {
         return 0;
     }
 
-    while(1) {
+    while(1) 
+    {
         if(repo_count != 0)
             if(dir_count == repo_count)
                 break;
@@ -267,8 +268,12 @@ int main (int arc, char **argv) {
     /* image comparison logic */
     FILE *f_in = fopen("metadata_image.txt","r");
     FILE *f_out = fopen("report.html","w");
-    fprintf(f_out,"<html>\n<head><link rel=\"stylesheet\" type=\"text/css\" href=\"report.css\">\n<title>Image Captcha Report</title>\n</head>\n<body>\n<table>\n");
-    fprintf(f_out,"<tr>\n<td>Original</td>\n<td>Target</td>\n<td>O_p</td>\n<td>T_p</td>\n<td>Match</td>\n<td>Ratio</td>\n</tr>\n");
+    fprintf(f_out,"<html>\n<head><link rel=\"stylesheet\" type=\"text/css\"" 
+                    "href=\"report.css\">\n<title>Image Captcha Report</title>\n"
+                    "</head>\n<body>\n");
+    fprintf(f_out,"<h1>Image Comparison Result</h1>");
+    fprintf(f_out,"<table>\n<tr>\n<td>Original</td>\n<td>Target</td>\n<td>O_p</td>\n"
+                    "<td>T_p</td>\n<td>Match</td>\n<td>Ratio</td>\n</tr>\n");
     if(fp == NULL)
     {
         printf("File open error\n");
@@ -282,19 +287,21 @@ int main (int arc, char **argv) {
     int total_number_of_dir = i;
     char object_filename[1000];
     char scene_filename[1000];
+    double total_time = 0;
     for(i=0; i < total_number_of_dir; i++)
     {
         strcpy(object_filename,dir_route[i]);
         fprintf(f_out,"<tr>\n");
-        fprintf(f_out,"<td><a href=%s target=_blank>%s</a></td>",object_filename,strstr(object_filename,"px-"));
+        fprintf(f_out,"<td><a href=%s target=_blank>%s</a></td>",
+                object_filename,strstr(object_filename,"px-"));
 
         for(j = i+1; j< total_number_of_dir; j++)
         {
             if( j != i+1 )
                 fprintf(f_out,"<tr>\n<td></td>\n");
             strcpy(scene_filename,dir_route[j]);
-            fprintf(f_out,"<td><a href=%s target=_blank>%s</a></td>",scene_filename,strstr(scene_filename,"px-"));
-            //printf("%s :: %s\n",object_filename,scene_filename);
+            fprintf(f_out,"<td><a href=%s target=_blank>%s</a></td>",
+                    scene_filename,strstr(scene_filename,"px-"));
 
             CvMemStorage* storage = cvCreateMemStorage(0);
             static CvScalar colors[] =
@@ -335,9 +342,15 @@ int main (int arc, char **argv) {
             printf("Image Descriptors: %d\n", imageDescriptors->total);
             fprintf(f_out,"<td>%d</td>",imageDescriptors->total);
             tt = (double)cvGetTickCount() - tt;
+            total_time += (tt/(cvGetTickFrequency()*1.));
             printf("Extraction time = %gms\n", tt/(cvGetTickFrequency()*1000.));
-            // added TODO
-            CvPoint src_corners[4] = {{0,0}, {object->width,0}, {object->width, object->height}, {0, object->height}};
+            
+            CvPoint src_corners[4] = {
+                                        {0,0},
+                                        {object->width,0},
+                                        {object->width, object->height},
+                                        {0, object->height}
+                                     };
             CvPoint dst_corners[4];
 #ifdef USE_FLANN
             printf("Using approximate nearest neighbor search\n");
@@ -346,19 +359,24 @@ int main (int arc, char **argv) {
             vector<int> ptpairs;
 
 #ifdef USE_FLANN
-            flannFindPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
+            flannFindPairs( objectKeypoints, objectDescriptors, 
+                            imageKeypoints, imageDescriptors, ptpairs );
 #else
-            findPairs( objectKeypoints, objectDescriptors, imageKeypoints, imageDescriptors, ptpairs );
+            findPairs( objectKeypoints, objectDescriptors, 
+                       imageKeypoints, imageDescriptors, ptpairs );
 #endif
 
             printf("Match points: %d\n",(int)ptpairs.size());
             fprintf(f_out,"<td>%d</td>\n",(int)ptpairs.size());
+
             float ratio = (float)ptpairs.size()/((float)objectDescriptors->total);
             printf("Ratio: %.2f\n",ratio*100);
             if( ratio >= 0.4 )
-                fprintf(f_out,"<td style=\"background-color:lightgreen;\">%.2f</td>\n",ratio*100);
+                fprintf(f_out,"<td style=\"background-color:lightgreen;\">"
+                                    "%.2f</td>\n",ratio*100);
             else if( ratio >= 0.2 )
-                fprintf(f_out,"<td style=\"background-color:lightblue;\">%.2f</td>\n",ratio*100);
+                fprintf(f_out,"<td style=\"background-color:lightblue;\">"
+                                    "%.2f</td>\n",ratio*100);
             else
                 fprintf(f_out,"<td>%.2f</td>\n",ratio*100);
             if( j != i+1 )
@@ -366,7 +384,17 @@ int main (int arc, char **argv) {
         }
         fprintf(f_out,"</tr>\n");
     }
-    fprintf(f_out,"</table>\n</body>\n</html>");
+    fprintf(f_out,"</table>\n</body>\n</html>\n");
+    total_time *= 0.000001;
+    fprintf(f_out,"<br><br><h1>Execution Report</h1>");
+    fprintf(f_out,"<h3>Total Extraction Time = %.2fs\n", total_time);
+    fprintf(f_out,"<br>Total Number of Files = %d\n", total_number_of_dir);
+    {
+        int comparison = (total_number_of_dir * (total_number_of_dir+1) )/2;
+        fprintf(f_out,"<br>Number of Comparison = %d\n", comparison);
+        total_time /= (double) comparison;
+        fprintf(f_out,"<br>Average Comparison Time = %.4f sec / 1 file</h3>\n", total_time);
+    }
 
     /* free buffer list */
     for(i=0; i<1000; i++)
@@ -389,7 +417,9 @@ int main (int arc, char **argv) {
  == 0 : return NULL
  *
  ***************************/
-int image_thriver(char **repo, int *repo_count, int *repo_thrive, FILE *fp) {
+int 
+image_thriver(char **repo, int *repo_count, int *repo_thrive, FILE *fp) 
+{
     // printf("Current route:%s\n",repo[*repo_count]);
 
     int file_counter = 0;

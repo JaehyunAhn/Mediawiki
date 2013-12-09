@@ -270,9 +270,8 @@ int main (int arc, char **argv) {
     FILE *f_out = fopen("report.html","w");
     fprintf(f_out,"<html>\n<head><link rel=\"stylesheet\" type=\"text/css\"" 
                     "href=\"report.css\">\n<title>Image Captcha Report</title>\n"
-                    "</head>\n<body>\n");
-    fprintf(f_out,"<h1>Image Comparison Result</h1>");
-    fprintf(f_out,"<table>\n<tr>\n<td>Original</td>\n<td>Target</td>\n<td>O_p</td>\n"
+                    "</head>\n<body>\n<table>\n");
+    fprintf(f_out,"<tr>\n<td>Original</td>\n<td>Target</td>\n<td>O_p</td>\n"
                     "<td>T_p</td>\n<td>Match</td>\n<td>Ratio</td>\n</tr>\n");
     if(fp == NULL)
     {
@@ -342,7 +341,7 @@ int main (int arc, char **argv) {
             printf("Image Descriptors: %d\n", imageDescriptors->total);
             fprintf(f_out,"<td>%d</td>",imageDescriptors->total);
             tt = (double)cvGetTickCount() - tt;
-            total_time += (tt/(cvGetTickFrequency()*1.));
+            total_time += (tt/cvGetTickFrequency());
             printf("Extraction time = %gms\n", tt/(cvGetTickFrequency()*1000.));
             
             CvPoint src_corners[4] = {
@@ -384,17 +383,8 @@ int main (int arc, char **argv) {
         }
         fprintf(f_out,"</tr>\n");
     }
-    fprintf(f_out,"</table>\n</body>\n</html>\n");
-    total_time *= 0.000001;
-    fprintf(f_out,"<br><br><h1>Execution Report</h1>");
-    fprintf(f_out,"<h3>Total Extraction Time = %.2fs\n", total_time);
-    fprintf(f_out,"<br>Total Number of Files = %d\n", total_number_of_dir);
-    {
-        int comparison = (total_number_of_dir * (total_number_of_dir+1) )/2;
-        fprintf(f_out,"<br>Number of Comparison = %d\n", comparison);
-        total_time /= (double) comparison;
-        fprintf(f_out,"<br>Average Comparison Time = %.4f sec / 1 file</h3>\n", total_time);
-    }
+    fprintf(f_out,"</table>\n</body>\n</html>");
+    fprintf(f_out,"Extraction time = %.4fs\n", total_time);
 
     /* free buffer list */
     for(i=0; i<1000; i++)

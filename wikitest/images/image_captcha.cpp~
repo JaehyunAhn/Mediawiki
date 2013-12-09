@@ -371,7 +371,10 @@ int main (int arc, char **argv) {
 
             float ratio = (float)ptpairs.size()/((float)objectDescriptors->total);
             printf("Ratio: %.2f\n",ratio*100);
-            if( ratio >= 0.4 )
+            if ( ratio >= 0.8 )
+                fprintf(f_out,"<td style=\"background-color:lightyellow;\">"
+                                    "%.2f</td>\n",ratio*100);
+            else if( ratio >= 0.4 )
                 fprintf(f_out,"<td style=\"background-color:lightgreen;\">"
                                     "%.2f</td>\n",ratio*100);
             else if( ratio >= 0.2 )

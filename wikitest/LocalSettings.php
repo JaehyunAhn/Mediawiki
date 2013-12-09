@@ -135,6 +135,13 @@ $wgDiff3 = "/usr/bin/diff3";
 # that value)
 $wgResourceLoaderMaxQueryLength = -1;
 
+#Account Manage
+$wgWhitelistRead = array("Main Page", "Special:Userlogin", "-", "MediaWiki:Monobook.css");
+$wgGroupPermissions['*']['createaccount']=true;
+$wgGroupPermissions['*']['read']=true;
+$wgGroupPermissions['*']['edit']=false;
+$wgGroupPermissions['*']['createpage']=false;
+$wgGroupPermissions['']['createtalk']=false;
 
 # Enabled Extensions. Most extensions are enabled by including the base extension file here
 # but check specific extension documentation for more details
@@ -150,12 +157,12 @@ require_once( "$IP/extensions/SpamBlacklist/SpamBlacklist.php" );
 require_once( "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php" );
 require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
 require_once( "$IP/extensions/Widgets/Widgets.php" );
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
 require_once( "$IP/extensions/ExtensionInstaller/ExtensionInstaller.php" );
 //require_once( "$IP/extensions/Validator/Validator.php" );
 //require_once( "$IP/extensions/Maps/Maps.php" );
->>>>>>> master
+//>>>>>>> master
 
 # End of automatically generated settings.
 # Add more configuration options below.
